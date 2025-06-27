@@ -14,7 +14,11 @@
     "format": "prettier --write src/",
     "supabase:init": "supabase init",
     "supabase:login": "supabase login",
-    "supabase:link": "supabase link --project-ref dlsglwnootuksrxhhxzp"
+    "supabase:link": "supabase link --project-ref dlsglwnootuksrxhhxzp",
+    "supabase:types": "npx supabase gen types typescript --project-id dlsglwnootuksrxhhxzp --schema public > database/types.ts",
+    "db:migrate:new": "supabase migration new projects-schema",
+    "db:reset": "supabase db reset --linked",
+    "db:seed": "node --env-file=.env database/seed.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.2",
@@ -23,6 +27,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.15.32",
