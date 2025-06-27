@@ -39,6 +39,44 @@ export type Database = {
         }
         Relationships: []
       }
+      tasks: {
+        Row: {
+          collaborators: string[]
+          description: string | null
+          due_date: string | null
+          name: string
+          project_id: number | null
+          status: Database["public"]["Enums"]["current_status"]
+          task_id: number
+        }
+        Insert: {
+          collaborators?: string[]
+          description?: string | null
+          due_date?: string | null
+          name: string
+          project_id?: number | null
+          status?: Database["public"]["Enums"]["current_status"]
+          task_id?: never
+        }
+        Update: {
+          collaborators?: string[]
+          description?: string | null
+          due_date?: string | null
+          name?: string
+          project_id?: number | null
+          status?: Database["public"]["Enums"]["current_status"]
+          task_id?: never
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["project_id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
