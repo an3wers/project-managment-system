@@ -72,8 +72,7 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Tasks</h1>
+  <div>
     <DataTable v-if="tasks" :columns="columns" :data="tasks" />
   </div>
 </template>

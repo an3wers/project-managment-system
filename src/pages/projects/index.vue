@@ -25,7 +25,7 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     accessorKey: 'project_id',
     header: () => h('div', { class: 'text-left' }, 'ID'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, () => row.getValue('project_id'))
+      return h('div', { class: 'text-left font-medium' }, row.getValue('project_id'))
     },
   },
   {
@@ -43,7 +43,7 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     accessorKey: 'status',
     header: () => h('div', { class: 'text-left' }, 'Status'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left' }, () => row.getValue('status'))
+      return h('div', { class: 'text-left' }, row.getValue('status'))
     },
   },
   {
@@ -51,7 +51,9 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     header: () => h('div', { class: 'text-left' }, 'Created'),
     cell: ({ row }) => {
       const date = row.getValue('created_at')
-      return h('div', { class: 'text-left' }, () =>
+      return h(
+        'div',
+        { class: 'text-left' },
         date ? new Date(String(date)).toLocaleDateString() : '-',
       )
     },
@@ -61,15 +63,14 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     header: () => h('div', { class: 'text-left' }, 'Collaborators'),
     cell: ({ row }) => {
       const collaborators = (row.getValue('collaborators') as string[]) || []
-      return h('div', { class: 'text-left' }, () => collaborators.join(', ') || '-')
+      return h('div', { class: 'text-left' }, collaborators.join(', ') || '-')
     },
   },
 ]
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Projects</h1>
+  <div>
     <DataTable v-if="projects" :columns="columns" :data="projects" />
   </div>
 </template>
