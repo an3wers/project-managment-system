@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { supabase } from '@/lib/supabas-client'
-import type { Tables } from 'database/types'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePageStore } from '@/stores/page-store'
+import { projectQuery } from '@/utils/supabase/queryes'
+import type { Project } from '@/utils/supabase/queryes'
 
 const route = useRoute()
 const { setPageData } = usePageStore()
 
-const project = ref<Tables<'projects'> | null>(null)
+const project = ref<Project | null>(null)
 
 const getProject = async () => {
-  const { data, error } = await supabase
-    .from('projects')
-    .select()
-    .eq('slug', route.params.slug as string)
+  const { data, error } = await projectQuery(route.params.slug as string)
 
   if (error) {
     console.error(error)
