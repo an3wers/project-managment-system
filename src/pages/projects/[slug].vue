@@ -3,8 +3,10 @@ import { supabase } from '@/lib/supabas-client'
 import type { Tables } from 'database/types'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { usePageStore } from '@/stores/page-store'
 
 const route = useRoute()
+const { setPageData } = usePageStore()
 
 const project = ref<Tables<'projects'> | null>(null)
 
@@ -22,6 +24,8 @@ const getProject = async () => {
 }
 
 await getProject()
+
+setPageData({ title: project.value?.name ?? 'Project' })
 </script>
 
 <template>

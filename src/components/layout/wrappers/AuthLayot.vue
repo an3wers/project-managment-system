@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import LeftSidebar from '../LeftSidebar.vue'
 import TopNavbar from '../TopNavbar.vue'
+import { usePageStore } from '@/stores/page-store'
+
+const pageStore = usePageStore()
 </script>
 
 <template>
@@ -9,7 +12,7 @@ import TopNavbar from '../TopNavbar.vue'
     <TopNavbar />
     <main>
       <div class="max-w-6xl mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">Page Title</h1>
+        <h1 class="text-2xl font-bold mb-4">{{ pageStore.pageData.title }}</h1>
         <slot />
       </div>
     </main>

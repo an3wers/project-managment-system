@@ -5,6 +5,11 @@ import type { Tables } from '../../../database/types'
 import type { ColumnDef } from '@tanstack/vue-table'
 import DataTable from '@/components/data-table/DataTable.vue'
 import { RouterLink } from 'vue-router'
+import { usePageStore } from '@/stores/page-store'
+
+const { setPageData } = usePageStore()
+
+setPageData({ title: 'Projects' })
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 

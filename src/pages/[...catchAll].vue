@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { usePageStore } from '@/stores/page-store'
+
+const { setPageData } = usePageStore()
+
+setPageData({ title: 'Page not found' })
+</script>
 
 <template>
-  <div>
-    <h1>Page not found</h1>
-  </div>
+  <div></div>
 </template>

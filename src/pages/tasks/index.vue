@@ -4,6 +4,11 @@ import { h, ref } from 'vue'
 import type { Tables } from '../../../database/types'
 import type { ColumnDef } from '@tanstack/vue-table'
 import DataTable from '@/components/data-table/DataTable.vue'
+import { usePageStore } from '@/stores/page-store'
+
+const { setPageData } = usePageStore()
+
+setPageData({ title: 'My tasks' })
 
 // TODO: migrate to Tanstack Query
 const tasks = ref<Tables<'tasks'>[] | null>(null)
