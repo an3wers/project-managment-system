@@ -8,7 +8,7 @@ const route = useRoute()
 
 const project = ref<Tables<'projects'> | null>(null)
 
-;(async () => {
+const getProject = async () => {
   const { data, error } = await supabase
     .from('projects')
     .select()
@@ -19,7 +19,9 @@ const project = ref<Tables<'projects'> | null>(null)
   }
 
   project.value = data?.[0] ?? null
-})()
+}
+
+await getProject()
 </script>
 
 <template>

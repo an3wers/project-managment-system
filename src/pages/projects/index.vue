@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 
-;(async () => {
+const getProjects = async () => {
   const { data, error } = await supabase.from('projects').select()
 
   if (error) {
@@ -16,14 +16,16 @@ const projects = ref<Tables<'projects'>[] | null>(null)
   }
 
   projects.value = data
-})()
+}
+
+await getProjects()
 
 const columns: ColumnDef<Tables<'projects'>>[] = [
   {
     accessorKey: 'project_id',
     header: () => h('div', { class: 'text-left' }, 'ID'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('project_id'))
+      return h('div', { class: 'text-left font-medium' }, () => row.getValue('project_id'))
     },
   },
   {
@@ -33,7 +35,7 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
       return h(
         RouterLink,
         { to: `/projects/${row.original.slug}`, class: 'text-left font-medium' },
-        row.getValue('name'),
+        () => row.getValue('name'),
       )
     },
   },
@@ -41,7 +43,7 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     accessorKey: 'status',
     header: () => h('div', { class: 'text-left' }, 'Status'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left' }, row.getValue('status'))
+      return h('div', { class: 'text-left' }, () => row.getValue('status'))
     },
   },
   {
@@ -49,9 +51,7 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     header: () => h('div', { class: 'text-left' }, 'Created'),
     cell: ({ row }) => {
       const date = row.getValue('created_at')
-      return h(
-        'div',
-        { class: 'text-left' },
+      return h('div', { class: 'text-left' }, () =>
         date ? new Date(String(date)).toLocaleDateString() : '-',
       )
     },
@@ -61,7 +61,7 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     header: () => h('div', { class: 'text-left' }, 'Collaborators'),
     cell: ({ row }) => {
       const collaborators = (row.getValue('collaborators') as string[]) || []
-      return h('div', { class: 'text-left' }, collaborators.join(', ') || '-')
+      return h('div', { class: 'text-left' }, () => collaborators.join(', ') || '-')
     },
   },
 ]
