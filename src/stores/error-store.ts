@@ -1,5 +1,5 @@
 import type { CustomError } from '@/types/error'
-import { defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useErrorStore = defineStore('error', () => {
@@ -16,3 +16,7 @@ export const useErrorStore = defineStore('error', () => {
 
   return { activeError, setActiveError, clearActiveError }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useErrorStore, import.meta.hot))
+}
