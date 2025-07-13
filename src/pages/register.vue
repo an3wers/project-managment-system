@@ -5,10 +5,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { RouterLink } from 'vue-router'
-
 import { ref } from 'vue'
-import { supabase } from '@/lib/supabas-client'
 import { useRouter } from 'vue-router'
+import { register } from '@/utils/supabase/auth'
 
 const formData = ref({
   username: '',
@@ -20,26 +19,12 @@ const formData = ref({
 })
 const router = useRouter()
 
-// async function signup() {
-//   console.log(formData.value)
-// }
+async function signup() {
+  const isRegistered = await register(formData.value)
 
-const signup = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email: formData.value.email,
-    password: formData.value.password,
-  })
-
-  if (error) return console.log(error)
-
-  if (data.user) {
-    const { error } = await supabase.from('profiles').insert({
-      id: data.user.id,
-      username: formData.value.username,
-      full_name: formData.value.firstName.concat(' ', formData.value.lastName),
-    })
-
-    if (error) console.log('Profiles err: ', error)
+  if (!isRegistered) {
+    console.error('Failed to register')
+    return
   }
 
   router.push('/')

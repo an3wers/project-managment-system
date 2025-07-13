@@ -6,8 +6,8 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
-import { supabase } from '@/lib/supabas-client'
 import { useRouter } from 'vue-router'
+import { login } from '@/utils/supabase/auth'
 
 const router = useRouter()
 
@@ -16,15 +16,14 @@ const formData = ref({
   password: '',
 })
 
-const login = async () => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: formData.value.email,
-    password: formData.value.password,
-  })
+async function signin() {
+  const isLoggedIn = await login(formData.value)
 
-  if (error) return console.log(error)
+  if (!isLoggedIn) {
+    console.error('Failed to login')
+    return
+  }
 
-  console.log(data)
   router.push('/')
 }
 </script>
@@ -42,7 +41,7 @@ const login = async () => {
           <Separator label="Or" />
         </div>
 
-        <form class="grid gap-4" @submit.prevent="login">
+        <form class="grid gap-4" @submit.prevent="signin">
           <div class="grid gap-2">
             <Label id="email" class="text-left">Email</Label>
             <Input
