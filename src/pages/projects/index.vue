@@ -5,6 +5,7 @@ import { usePageStore } from '@/stores/page-store'
 import { projectsQuery } from '@/utils/supabase/queryes'
 import type { Projects } from '@/utils/supabase/queryes'
 import { columns } from '@/utils/table-columns/projectsColumns'
+import { useErrorStore } from '@/stores/error-store'
 
 const { setPageData } = usePageStore()
 
@@ -13,10 +14,10 @@ setPageData({ title: 'Projects' })
 const projects = ref<Projects | null>(null)
 
 const getProjects = async () => {
-  const { data, error } = await projectsQuery
+  const { data, error, status } = await projectsQuery
 
   if (error) {
-    console.error(error)
+    useErrorStore().setActiveError({ error: error.message, customCode: status })
   }
 
   projects.value = data

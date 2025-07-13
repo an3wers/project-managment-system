@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { usePageStore } from '@/stores/page-store'
 import { projectQuery } from '@/utils/supabase/queryes'
 import type { Project } from '@/utils/supabase/queryes'
+import { useErrorStore } from '@/stores/error-store'
 
 const route = useRoute('/projects/[slug]')
 const { setPageData } = usePageStore()
@@ -18,10 +19,10 @@ watch(
 )
 
 const getProject = async () => {
-  const { data, error } = await projectQuery(route.params.slug as string)
+  const { data, error, status } = await projectQuery(route.params.slug as string)
 
   if (error) {
-    console.error(error)
+    useErrorStore().setActiveError({ error: error.message, customCode: status })
   }
 
   project.value = data ?? null
