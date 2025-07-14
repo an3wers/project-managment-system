@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+
+function signOut() {}
 </script>
 <template>
   <aside
@@ -55,13 +57,13 @@ import { Icon } from '@iconify/vue'
           <Icon icon="lucide:settings"></Icon>
           <span class="hidden lg:block text-nowrap">Settings</span>
         </RouterLink>
-        <RouterLink
-          to="/signout"
-          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg hover:text-primary justify-center lg:justify-normal text-muted-foreground"
+        <button
+          class="flex items-center gap-3 px-4 py-2 mx-2 transition-colors rounded-lg cursor-pointer hover:text-primary justify-center lg:justify-normal text-muted-foreground"
+          @click="signOut"
         >
           <Icon icon="lucide:log-out"></Icon>
           <span class="hidden lg:block text-nowrap">Sign out</span>
-        </RouterLink>
+        </button>
       </div>
     </nav>
   </aside>

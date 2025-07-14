@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabas-client'
 import { profileQuery, type Profile } from '@/utils/supabase/queryes'
 import type { Session, User } from '@supabase/supabase-js'
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -34,7 +35,15 @@ export const useAuthStore = defineStore('auth-store', () => {
     }
   }
 
-  return { user, profile, setUser }
+  async function getSession() {
+    const { data } = await supabase.auth.getSession()
+
+    if (data.session?.user) {
+      await setUser(data.session)
+    }
+  }
+
+  return { user, profile, setUser, getSession }
 })
 
 if (import.meta.hot) {

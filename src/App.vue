@@ -3,13 +3,15 @@ import { RouterView } from 'vue-router'
 import AuthLayot from './components/layout/wrappers/AuthLayot.vue'
 import { useErrorStore } from './stores/error-store'
 import AppErrorPage from './components/app-error/AppErrorPage.vue'
-import { onErrorCaptured } from 'vue'
+import { onErrorCaptured, onMounted } from 'vue'
 
 const errorStore = useErrorStore()
 
 onErrorCaptured((error) => {
   errorStore.setActiveError({ error: error, customCode: 500 })
 })
+
+onMounted(async () => {})
 </script>
 
 <template>
