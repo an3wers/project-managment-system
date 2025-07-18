@@ -1,7 +1,19 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { useRouter } from 'vue-router'
 
-function signOut() {}
+const router = useRouter()
+
+async function signOut() {
+  const { logout } = await import('@/utils/supabase/auth')
+
+  const isLogout = await logout()
+  if (!isLogout) {
+    return
+  }
+
+  router.push('/login')
+}
 </script>
 <template>
   <aside

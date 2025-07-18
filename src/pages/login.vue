@@ -8,6 +8,11 @@ import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/utils/supabase/auth'
+import { usePageStore } from '@/stores/page-store'
+
+const { setPageData } = usePageStore()
+
+setPageData({ title: '' })
 
 const router = useRouter()
 

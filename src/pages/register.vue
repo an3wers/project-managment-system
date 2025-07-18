@@ -9,6 +9,12 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { register } from '@/utils/supabase/auth'
 
+import { usePageStore } from '@/stores/page-store'
+
+const { setPageData } = usePageStore()
+
+setPageData({ title: '' })
+
 const formData = ref({
   username: '',
   firstName: '',
